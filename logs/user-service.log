@@ -1,0 +1,275 @@
+2025-07-29T21:18:04.240+04:00  INFO 12608 --- [UserService] [main] c.e.userservice.UserServiceApplication   : Starting UserServiceApplication using Java 21.0.1 with PID 12608 (C:\Users\Gülnar\IdeaProjects\UserService\build\classes\java\main started by Gülnar in C:\Users\Gülnar\IdeaProjects\UserService)
+2025-07-29T21:18:04.243+04:00 DEBUG 12608 --- [UserService] [main] c.e.userservice.UserServiceApplication   : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-07-29T21:18:04.244+04:00  INFO 12608 --- [UserService] [main] c.e.userservice.UserServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-07-29T21:18:06.646+04:00  INFO 12608 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-29T21:18:06.653+04:00  INFO 12608 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-29T21:18:07.517+04:00  INFO 12608 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 825 ms. Found 3 JPA repository interfaces.
+2025-07-29T21:18:07.612+04:00  INFO 12608 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-29T21:18:07.621+04:00  INFO 12608 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-07-29T21:18:07.697+04:00  INFO 12608 --- [UserService] [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.userservice.repository.AdminRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-07-29T21:18:07.698+04:00  INFO 12608 --- [UserService] [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.userservice.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-07-29T21:18:07.700+04:00  INFO 12608 --- [UserService] [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.userservice.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-07-29T21:18:07.701+04:00  INFO 12608 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 31 ms. Found 0 Redis repository interfaces.
+2025-07-29T21:18:09.816+04:00  INFO 12608 --- [UserService] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-07-29T21:18:09.853+04:00  INFO 12608 --- [UserService] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-29T21:18:09.853+04:00  INFO 12608 --- [UserService] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-07-29T21:18:10.144+04:00  INFO 12608 --- [UserService] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-29T21:18:10.147+04:00  INFO 12608 --- [UserService] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5815 ms
+2025-07-29T21:18:10.796+04:00  INFO 12608 --- [UserService] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-29T21:18:11.153+04:00  INFO 12608 --- [UserService] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-07-29T21:18:11.340+04:00  INFO 12608 --- [UserService] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-29T21:18:12.570+04:00  INFO 12608 --- [UserService] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-29T21:18:12.705+04:00  INFO 12608 --- [UserService] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-29T21:18:13.236+04:00  INFO 12608 --- [UserService] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@797f97e3
+2025-07-29T21:18:13.238+04:00  INFO 12608 --- [UserService] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-29T21:18:13.462+04:00  WARN 12608 --- [UserService] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-29T21:18:16.158+04:00  INFO 12608 --- [UserService] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-29T21:18:16.353+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    create table admin_permissions (
+        admin_id bigint not null,
+        permission varchar(255) check (permission in ('READ_USERS','MANAGE_USERS','READ_SUBSCRIPTIONS','MANAGE_SUBSCRIPTIONS','VIEW_ANALYTICS','SYSTEM_SETTINGS','USER_SUPPORT'))
+    )
+2025-07-29T21:18:16.402+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    create table admins (
+        id bigserial not null,
+        created_at timestamp(6),
+        email varchar(255) not null,
+        first_name varchar(255) not null,
+        is_active boolean,
+        last_login timestamp(6),
+        last_name varchar(255) not null,
+        max_sessions integer,
+        password varchar(255) not null,
+        role varchar(255) not null check (role in ('ADMIN','SUPER_ADMIN')),
+        updated_at timestamp(6),
+        username varchar(255) not null,
+        primary key (id)
+    )
+2025-07-29T21:18:16.438+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    create table refresh_tokens (
+        id bigserial not null,
+        admin_id bigint not null,
+        created_at timestamp(6) not null,
+        device_info varchar(255),
+        expires_at timestamp(6) not null,
+        ip_address varchar(255),
+        is_used boolean not null,
+        token_hash varchar(255) not null,
+        primary key (id)
+    )
+2025-07-29T21:18:16.461+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists admins 
+       drop constraint if exists UK_47bvqemyk6vlm0w7crc3opdd4
+2025-07-29T21:18:16.472+04:00  WARN 12608 --- [UserService] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-07-29T21:18:16.472+04:00  WARN 12608 --- [UserService] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk_47bvqemyk6vlm0w7crc3opdd4" of relation "admins" does not exist, skipping
+2025-07-29T21:18:16.473+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists admins 
+       add constraint UK_47bvqemyk6vlm0w7crc3opdd4 unique (email)
+2025-07-29T21:18:16.480+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists admins 
+       drop constraint if exists UK_mi8vkhus4xbdbqcac2jm4spvd
+2025-07-29T21:18:16.482+04:00  WARN 12608 --- [UserService] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-07-29T21:18:16.483+04:00  WARN 12608 --- [UserService] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk_mi8vkhus4xbdbqcac2jm4spvd" of relation "admins" does not exist, skipping
+2025-07-29T21:18:16.484+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists admins 
+       add constraint UK_mi8vkhus4xbdbqcac2jm4spvd unique (username)
+2025-07-29T21:18:16.489+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists refresh_tokens 
+       drop constraint if exists UK_o2mlirhldriil2y7krapq4frt
+2025-07-29T21:18:16.491+04:00  WARN 12608 --- [UserService] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-07-29T21:18:16.491+04:00  WARN 12608 --- [UserService] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk_o2mlirhldriil2y7krapq4frt" of relation "refresh_tokens" does not exist, skipping
+2025-07-29T21:18:16.491+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists refresh_tokens 
+       add constraint UK_o2mlirhldriil2y7krapq4frt unique (token_hash)
+2025-07-29T21:18:16.497+04:00 DEBUG 12608 --- [UserService] [main] org.hibernate.SQL                        : 
+    alter table if exists admin_permissions 
+       add constraint FK7vyuc2dwnyqi0v44ab5n5faca 
+       foreign key (admin_id) 
+       references admins
+2025-07-29T21:18:16.523+04:00  INFO 12608 --- [UserService] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-29T21:18:17.295+04:00 ERROR 12608 --- [UserService] [main] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtAuthenticationFilter': Unsatisfied dependency expressed through field 'userDetailsService': Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.example.userservice.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable); Reason: Paging query needs to have a Pageable parameter; Offending method: public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable)
+2025-07-29T21:18:17.361+04:00  INFO 12608 --- [UserService] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-07-29T21:18:17.367+04:00  WARN 12608 --- [UserService] [main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+ java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+ java.base/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+ java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+ java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+ java.base/java.lang.Thread.run(Thread.java:1583)
+2025-07-29T21:18:17.368+04:00  WARN 12608 --- [UserService] [main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+ java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+ java.base/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1069)
+ java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+ java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+ java.base/java.lang.Thread.run(Thread.java:1583)
+2025-07-29T21:18:17.376+04:00  WARN 12608 --- [UserService] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-07-29T21:18:17.376+04:00  INFO 12608 --- [UserService] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-29T21:18:17.378+04:00  INFO 12608 --- [UserService] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-29T21:18:17.391+04:00  INFO 12608 --- [UserService] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-07-29T21:18:17.415+04:00  INFO 12608 --- [UserService] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-07-29T21:18:17.456+04:00 ERROR 12608 --- [UserService] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:165) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:610) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.example.userservice.UserServiceApplication.main(UserServiceApplication.java:10) ~[main/:na]
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:142) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:501) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:218) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[spring-boot-3.2.0.jar:3.2.0]
+	... 8 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtAuthenticationFilter': Unsatisfied dependency expressed through field 'userDetailsService': Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.example.userservice.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable); Reason: Paging query needs to have a Pageable parameter; Offending method: public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:772) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:752) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:493) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1420) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:266) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:240) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4850) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:488) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123) ~[spring-boot-3.2.0.jar:3.2.0]
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.example.userservice.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable); Reason: Paging query needs to have a Pageable parameter; Offending method: public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:772) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:752) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:493) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1420) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1441) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1348) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:769) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 55 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userRepository' defined in com.example.userservice.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable); Reason: Paging query needs to have a Pageable parameter; Offending method: public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1441) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1348) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:769) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 69 common frames omitted
+Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable); Reason: Paging query needs to have a Pageable parameter; Offending method: public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable)
+	at org.springframework.data.repository.query.QueryCreationException.create(QueryCreationException.java:101) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:115) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:99) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:88) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at java.base/java.util.Optional.map(Optional.java:260) ~[na:na]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:88) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:357) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:279) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:135) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.util.Lazy.get(Lazy.java:113) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:285) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132) ~[spring-data-jpa-3.2.0.jar:3.2.0]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 79 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Paging query needs to have a Pageable parameter; Offending method: public abstract org.springframework.data.domain.Page com.example.userservice.repository.UserRepository.findByEmailContainingAndIsActiveTrue(java.lang.String,java.awt.print.Pageable)
+	at org.springframework.util.Assert.isTrue(Assert.java:111) ~[spring-core-6.1.1.jar:6.1.1]
+	at org.springframework.data.repository.query.QueryMethod.validate(QueryMethod.java:130) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.query.QueryMethod.<init>(QueryMethod.java:103) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.jpa.repository.query.JpaQueryMethod.<init>(JpaQueryMethod.java:113) ~[spring-data-jpa-3.2.0.jar:3.2.0]
+	at org.springframework.data.jpa.repository.query.DefaultJpaQueryMethodFactory.build(DefaultJpaQueryMethodFactory.java:44) ~[spring-data-jpa-3.2.0.jar:3.2.0]
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:94) ~[spring-data-jpa-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:111) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	... 91 common frames omitted
+
+2025-07-29T21:21:42.718+04:00  INFO 20628 --- [UserService] [main] c.e.userservice.UserServiceApplication   : Starting UserServiceApplication using Java 21.0.1 with PID 20628 (C:\Users\Gülnar\IdeaProjects\UserService\build\classes\java\main started by Gülnar in C:\Users\Gülnar\IdeaProjects\UserService)
+2025-07-29T21:21:42.720+04:00 DEBUG 20628 --- [UserService] [main] c.e.userservice.UserServiceApplication   : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-07-29T21:21:42.721+04:00  INFO 20628 --- [UserService] [main] c.e.userservice.UserServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-07-29T21:21:44.935+04:00  INFO 20628 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-29T21:21:44.939+04:00  INFO 20628 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-29T21:21:45.505+04:00  INFO 20628 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 544 ms. Found 3 JPA repository interfaces.
+2025-07-29T21:21:45.564+04:00  INFO 20628 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-29T21:21:45.568+04:00  INFO 20628 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-07-29T21:21:45.618+04:00  INFO 20628 --- [UserService] [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.userservice.repository.AdminRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-07-29T21:21:45.619+04:00  INFO 20628 --- [UserService] [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.userservice.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-07-29T21:21:45.619+04:00  INFO 20628 --- [UserService] [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.userservice.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-07-29T21:21:45.620+04:00  INFO 20628 --- [UserService] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 0 Redis repository interfaces.
+2025-07-29T21:21:47.203+04:00  INFO 20628 --- [UserService] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-07-29T21:21:47.227+04:00  INFO 20628 --- [UserService] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-29T21:21:47.228+04:00  INFO 20628 --- [UserService] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-07-29T21:21:47.405+04:00  INFO 20628 --- [UserService] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-29T21:21:47.406+04:00  INFO 20628 --- [UserService] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4556 ms
+2025-07-29T21:21:47.764+04:00  INFO 20628 --- [UserService] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-29T21:21:47.931+04:00  INFO 20628 --- [UserService] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-07-29T21:21:48.144+04:00  INFO 20628 --- [UserService] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-29T21:21:48.886+04:00  INFO 20628 --- [UserService] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-29T21:21:48.944+04:00  INFO 20628 --- [UserService] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-29T21:21:49.506+04:00  INFO 20628 --- [UserService] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@29f95272
+2025-07-29T21:21:49.510+04:00  INFO 20628 --- [UserService] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-29T21:21:49.612+04:00  WARN 20628 --- [UserService] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-29T21:21:53.012+04:00  INFO 20628 --- [UserService] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-29T21:21:53.482+04:00  INFO 20628 --- [UserService] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-29T21:21:54.645+04:00  INFO 20628 --- [UserService] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-07-29T21:21:56.165+04:00 DEBUG 20628 --- [UserService] [main] c.e.u.security.JwtAuthenticationFilter   : Filter 'jwtAuthenticationFilter' configured for use
+2025-07-29T21:21:57.411+04:00  WARN 20628 --- [UserService] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-29T21:21:58.424+04:00  INFO 20628 --- [UserService] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5f453412, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@14426256, org.springframework.security.web.context.SecurityContextHolderFilter@135ddb56, org.springframework.security.web.header.HeaderWriterFilter@79a1f0a1, org.springframework.web.filter.CorsFilter@17aa06eb, org.springframework.web.filter.CorsFilter@370c9681, org.springframework.security.web.authentication.logout.LogoutFilter@67dc7d0, com.example.userservice.security.JwtAuthenticationFilter@3bc82aa3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71d3776, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5303762f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@419fc1d6, org.springframework.security.web.session.SessionManagementFilter@3d44da41, org.springframework.security.web.access.ExceptionTranslationFilter@4788c0a1, org.springframework.security.web.access.intercept.AuthorizationFilter@4481f9bd]
+2025-07-29T21:21:59.448+04:00  INFO 20628 --- [UserService] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path ''
+2025-07-29T21:21:59.479+04:00  INFO 20628 --- [UserService] [main] c.e.userservice.UserServiceApplication   : Started UserServiceApplication in 18.52 seconds (process running for 20.362)
+2025-07-29T21:23:18.776+04:00  WARN 20628 --- [UserService] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s556ms329µs900ns).
+2025-07-29T21:35:55.301+04:00  INFO 20628 --- [UserService] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-29T21:35:55.363+04:00  INFO 20628 --- [UserService] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-29T21:35:55.401+04:00  INFO 20628 --- [UserService] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
