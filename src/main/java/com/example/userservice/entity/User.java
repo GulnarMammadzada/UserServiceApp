@@ -1,6 +1,5 @@
 package com.example.userservice.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -41,6 +40,10 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -54,11 +57,16 @@ public class User {
     public User() {}
 
     public User(String username, String email, String password, String firstName, String lastName) {
+        this(username, email, password, firstName, lastName, Role.USER);
+    }
+
+    public User(String username, String email, String password, String firstName, String lastName, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role = role;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.isActive = true;
@@ -74,6 +82,4 @@ public class User {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-
 }

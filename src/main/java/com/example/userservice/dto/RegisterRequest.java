@@ -1,5 +1,6 @@
 package com.example.userservice.dto;
 
+import com.example.userservice.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -25,6 +26,9 @@ public class RegisterRequest {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
+    private Role role;
+
+
     public RegisterRequest() {}
 
     public RegisterRequest(String username, String email, String password, String firstName, String lastName) {
@@ -34,6 +38,4 @@ public class RegisterRequest {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
-
 }

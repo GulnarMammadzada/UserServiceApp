@@ -1,23 +1,22 @@
 package com.example.userservice.service;
 
-
-
-import com.example.userservice.dto.LoginRequest;
-import com.example.userservice.dto.LoginResponse;
-import com.example.userservice.dto.RegisterRequest;
-import com.example.userservice.dto.UserResponse;
+import com.example.userservice.dto.*;
+import com.example.userservice.entity.RefreshToken;
+import com.example.userservice.entity.Role;
 import com.example.userservice.entity.User;
+import com.example.userservice.repository.RefreshTokenRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDateTime;
 
 @Service
 public class UserService {
@@ -28,122 +27,182 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-
-    private static final String USER_CACHE_PREFIX = "user:";
-    private static final long CACHE_TTL = 3600; // 1 hour
-
+    @Transactional
     public UserResponse register(RegisterRequest request) {
         logger.info("Registering new user with username: {}", request.getUsername());
 
-        // Check if user already exists
         if (userRepository.existsByUsername(request.getUsername())) {
-            logger.warn("Username already exists: {}", request.getUsername());
             throw new RuntimeException("Username already exists");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            logger.warn("Email already exists: {}", request.getEmail());
             throw new RuntimeException("Email already exists");
         }
 
-        // Create new user
+        // Use request.getRole() if provided, otherwise default to USER
+        Role role = request.getRole() != null ? request.getRole() : Role.USER;
+
         User user = new User(
                 request.getUsername(),
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
                 request.getFirstName(),
-                request.getLastName()
+                request.getLastName(),
+                role
         );
 
         User savedUser = userRepository.save(user);
-        logger.info("Successfully registered user with ID: {}", savedUser.getId());
 
-        // Cache user data (with improved error handling)
-        cacheUser(savedUser);
-
-        return new UserResponse(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                savedUser.getEmail(),
-                savedUser.getFirstName(),
-                savedUser.getLastName()
-        );
+        return mapToUserResponse(savedUser);
     }
 
+    @Transactional
     public LoginResponse login(LoginRequest request) {
         logger.info("Login attempt for username: {}", request.getUsername());
 
         User user = userRepository.findActiveUserByUsername(request.getUsername())
-                .orElseThrow(() -> {
-                    logger.warn("User not found: {}", request.getUsername());
-                    return new RuntimeException("Invalid username or password");
-                });
+                .orElseThrow(() -> new RuntimeException("Invalid username or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            logger.warn("Invalid password for user: {}", request.getUsername());
             throw new RuntimeException("Invalid username or password");
         }
 
-        String token = jwtUtil.generateToken(user.getUsername());
-        logger.info("Successfully logged in user: {}", request.getUsername());
+        // Generate tokens
+        String accessToken = jwtUtil.generateAccessToken(user.getUsername(), user.getRole().name());
+        String refreshTokenString = jwtUtil.generateRefreshTokenString();
 
-        // Cache user data (won't fail login if Redis is down)
-        cacheUser(user);
+        // Save refresh token
+        RefreshToken refreshToken = new RefreshToken(
+                refreshTokenString,
+                user.getUsername(),
+                LocalDateTime.now().plusSeconds(jwtUtil.getRefreshTokenExpiration() / 1000)
+        );
+        refreshTokenRepository.save(refreshToken);
 
         return new LoginResponse(
-                token,
+                accessToken,
+                refreshTokenString,
                 user.getUsername(),
                 user.getEmail(),
                 user.getFirstName(),
-                user.getLastName()
+                user.getLastName(),
+                user.getRole().name()
         );
+    }
+
+    @Transactional
+    public TokenResponse refreshToken(RefreshTokenRequest request) {
+        RefreshToken refreshToken = refreshTokenRepository.findByTokenAndIsUsedFalse(request.getRefreshToken())
+                .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
+
+        if (refreshToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Refresh token expired");
+        }
+
+        User user = userRepository.findActiveUserByUsername(refreshToken.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Mark old token as used
+        refreshToken.setIsUsed(true);
+        refreshTokenRepository.save(refreshToken);
+
+        // Generate new tokens
+        String newAccessToken = jwtUtil.generateAccessToken(user.getUsername(), user.getRole().name());
+        String newRefreshTokenString = jwtUtil.generateRefreshTokenString();
+
+        RefreshToken newRefreshToken = new RefreshToken(
+                newRefreshTokenString,
+                user.getUsername(),
+                LocalDateTime.now().plusSeconds(jwtUtil.getRefreshTokenExpiration() / 1000)
+        );
+        refreshTokenRepository.save(newRefreshToken);
+
+        return new TokenResponse(newAccessToken, newRefreshTokenString);
+    }
+
+    @Transactional
+    public void logout(String username) {
+        refreshTokenRepository.markAllTokensAsUsedForUser(username);
+    }
+
+    // Admin Functions
+    @Transactional
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(this::mapToUserResponse);
+    }
+
+    @Transactional
+    public Page<UserResponse> getUsersByRole(Role role, Pageable pageable) {
+        return userRepository.findByRole(role, pageable).map(this::mapToUserResponse);
+    }
+
+    @Transactional
+    public Page<UserResponse> searchUsers(String searchTerm, Pageable pageable) {
+        return userRepository.searchUsers(searchTerm, pageable).map(this::mapToUserResponse);
+    }
+
+    @Transactional
+    public UserResponse updateUserAsAdmin(Long userId, AdminUserRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (request.getEmail() != null && !user.getEmail().equals(request.getEmail()) &&
+                userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        if (request.getEmail() != null) user.setEmail(request.getEmail());
+        if (request.getFirstName() != null) user.setFirstName(request.getFirstName());
+        if (request.getLastName() != null) user.setLastName(request.getLastName());
+        if (request.getRole() != null) user.setRole(request.getRole());
+        if (request.getIsActive() != null) user.setIsActive(request.getIsActive());
+
+        User updatedUser = userRepository.save(user);
+
+        return mapToUserResponse(updatedUser);
+    }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setIsActive(false);
+        userRepository.save(user);
+        refreshTokenRepository.deleteAllTokensForUser(user.getUsername());
+    }
+
+    @Transactional
+    public UserResponse promoteToAdmin(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setRole(Role.ADMIN);
+        User updatedUser = userRepository.save(user);
+
+        return mapToUserResponse(updatedUser);
     }
 
     public UserResponse getUserByUsername(String username) {
-        logger.info("Getting user by username: {}", username);
-
-        // Try to get from cache first
-        UserResponse cachedUser = getCachedUser(username);
-        if (cachedUser != null) {
-            logger.info("Retrieved user from cache: {}", username);
-            return cachedUser;
-        }
-
-        // Get from database
-        User user = userRepository.findActiveUserByUsername(username)
-                .orElseThrow(() -> {
-                    logger.warn("User not found: {}", username);
-                    return new RuntimeException("User not found");
-                });
-
-        UserResponse userResponse = new UserResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName()
-        );
-
-        // Cache the result
-        cacheUserResponse(username, userResponse);
-
-        return userResponse;
-    }
-
-    public UserResponse updateUser(String username, RegisterRequest request) {
-        logger.info("Updating user: {}", username);
-
         User user = userRepository.findActiveUserByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Check if new email is already taken by another user
+        return mapToUserResponse(user);
+    }
+
+    @Transactional
+    public UserResponse updateUser(String username, RegisterRequest request) {
+        User user = userRepository.findActiveUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         if (!user.getEmail().equals(request.getEmail()) &&
                 userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
@@ -158,74 +217,26 @@ public class UserService {
         }
 
         User updatedUser = userRepository.save(user);
-        logger.info("Successfully updated user: {}", username);
 
-        // Update cache
-        cacheUser(updatedUser);
+        return mapToUserResponse(updatedUser);
+    }
 
+    // Helper methods
+    private UserResponse mapToUserResponse(User user) {
         return new UserResponse(
-                updatedUser.getId(),
-                updatedUser.getUsername(),
-                updatedUser.getEmail(),
-                updatedUser.getFirstName(),
-                updatedUser.getLastName()
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole().name(),
+                user.getIsActive()
         );
     }
 
-    // Improved caching methods with better error handling
-    private void cacheUser(User user) {
-        try {
-            UserResponse userResponse = new UserResponse(
-                    user.getId(),
-                    user.getUsername(),
-                    user.getEmail(),
-                    user.getFirstName(),
-                    user.getLastName()
-            );
-
-            String cacheKey = USER_CACHE_PREFIX + user.getUsername();
-            redisTemplate.opsForValue().set(cacheKey, userResponse, CACHE_TTL, TimeUnit.SECONDS);
-            logger.debug("Successfully cached user data for: {}", user.getUsername());
-        } catch (Exception e) {
-            logger.warn("Failed to cache user data for: {} - Error: {}", user.getUsername(), e.getMessage());
-            // Don't throw exception - caching failure shouldn't break business logic
-        }
-    }
-
-    private void cacheUserResponse(String username, UserResponse userResponse) {
-        try {
-            String cacheKey = USER_CACHE_PREFIX + username;
-            redisTemplate.opsForValue().set(cacheKey, userResponse, CACHE_TTL, TimeUnit.SECONDS);
-            logger.debug("Successfully cached user response for: {}", username);
-        } catch (Exception e) {
-            logger.warn("Failed to cache user response for: {} - Error: {}", username, e.getMessage());
-            // Don't throw exception - caching failure shouldn't break business logic
-        }
-    }
-
-    private UserResponse getCachedUser(String username) {
-        try {
-            String cacheKey = USER_CACHE_PREFIX + username;
-            Object cachedObject = redisTemplate.opsForValue().get(cacheKey);
-            if (cachedObject instanceof UserResponse) {
-                logger.debug("Successfully retrieved cached user for: {}", username);
-                return (UserResponse) cachedObject;
-            }
-            return null;
-        } catch (Exception e) {
-            logger.warn("Failed to get cached user for: {} - Error: {}", username, e.getMessage());
-            return null; // Fall back to database lookup
-        }
-    }
-
-    // Add method to clear cache when needed
-    public void clearUserCache(String username) {
-        try {
-            String cacheKey = USER_CACHE_PREFIX + username;
-            redisTemplate.delete(cacheKey);
-            logger.info("Cleared cache for user: {}", username);
-        } catch (Exception e) {
-            logger.warn("Failed to clear cache for user: {} - Error: {}", username, e.getMessage());
-        }
+    // Cleanup expired tokens
+    @Transactional
+    public void cleanupExpiredTokens() {
+        refreshTokenRepository.deleteExpiredTokens(LocalDateTime.now());
     }
 }

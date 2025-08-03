@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -38,7 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String requestURI = request.getRequestURI();
 
-        // Skip JWT processing for auth endpoints
         if (requestURI.startsWith("/api/auth/")) {
             filterChain.doFilter(request, response);
             return;
@@ -46,24 +47,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwt = null;
+        String role = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(jwt);
-                logger.debug("Extracted username from JWT: {}", username);
+                role = jwtUtil.extractRole(jwt);
+                logger.debug("Extracted username: {} and role: {} from JWT", username, role);
             } catch (Exception e) {
-                logger.warn("Failed to extract username from JWT: {}", e.getMessage());
+                logger.warn("Failed to extract data from JWT: {}", e.getMessage());
             }
-        } else {
-            logger.debug("No Authorization header found or doesn't start with Bearer for URI: {}", requestURI);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                if (jwtUtil.validateToken(jwt, username)) {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                if (jwtUtil.validateToken(jwt, userDetails.getUsername())) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails,
@@ -76,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    logger.debug("Successfully authenticated user: {}", username);
+                    logger.debug("Successfully authenticated user: {} with role: {}", username, role);
                 } else {
                     logger.warn("JWT token validation failed for user: {}", username);
                 }

@@ -1,6 +1,5 @@
 package com.example.userservice.util;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -8,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +20,13 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
+    @Value("${jwt.access-token.expiration}")
+    private Long accessTokenExpiration;
+
+    @Value("${jwt.refresh-token.expiration}")
+    private Long refreshTokenExpiration;
+
+    private final SecureRandom secureRandom = new SecureRandom();
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -51,16 +57,23 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
+    public String generateAccessToken(String username, String role) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        claims.put("role", role);
+        return createToken(claims, username, accessTokenExpiration);
     }
 
-    public String generateToken(String username, Map<String, Object> extraClaims) {
-        return createToken(extraClaims, username);
+    public String generateRefreshTokenString() {
+        byte[] randomBytes = new byte[64];
+        secureRandom.nextBytes(randomBytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public Long getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
+    }
+
+    private String createToken(Map<String, Object> claims, String subject, Long expiration) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(subject)
@@ -81,5 +94,9 @@ public class JwtUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
     }
 }
