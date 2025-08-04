@@ -35,6 +35,9 @@ public class UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private EmailService emailService;
+
     @Transactional
     public UserResponse register(RegisterRequest request) {
         logger.info("Registering new user with username: {}", request.getUsername());
@@ -60,6 +63,19 @@ public class UserService {
         );
 
         User savedUser = userRepository.save(user);
+
+        // Send welcome email
+        try {
+            emailService.sendWelcomeEmail(
+                    savedUser.getEmail(),
+                    savedUser.getFirstName(),
+                    savedUser.getLastName()
+            );
+            logger.info("Welcome email sent successfully to: {}", savedUser.getEmail());
+        } catch (Exception e) {
+            logger.error("Failed to send welcome email to {}: {}", savedUser.getEmail(), e.getMessage());
+            // Email xətası qeydiyyatı dayandırmasın
+        }
 
         return mapToUserResponse(savedUser);
     }
@@ -188,6 +204,18 @@ public class UserService {
         user.setRole(Role.ADMIN);
         User updatedUser = userRepository.save(user);
 
+        // Send admin promotion email
+        try {
+            emailService.sendAdminPromotionEmail(
+                    updatedUser.getEmail(),
+                    updatedUser.getFirstName(),
+                    updatedUser.getLastName()
+            );
+            logger.info("Admin promotion email sent successfully to: {}", updatedUser.getEmail());
+        } catch (Exception e) {
+            logger.error("Failed to send admin promotion email to {}: {}", updatedUser.getEmail(), e.getMessage());
+        }
+
         return mapToUserResponse(updatedUser);
     }
 
@@ -217,6 +245,18 @@ public class UserService {
         }
 
         User updatedUser = userRepository.save(user);
+
+        // Send profile update email
+        try {
+            emailService.sendProfileUpdateEmail(
+                    updatedUser.getEmail(),
+                    updatedUser.getFirstName(),
+                    updatedUser.getLastName()
+            );
+            logger.info("Profile update email sent successfully to: {}", updatedUser.getEmail());
+        } catch (Exception e) {
+            logger.error("Failed to send profile update email to {}: {}", updatedUser.getEmail(), e.getMessage());
+        }
 
         return mapToUserResponse(updatedUser);
     }

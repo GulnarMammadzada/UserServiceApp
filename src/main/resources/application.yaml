@@ -20,23 +20,40 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-    open-in-view: false  # Added to fix the warning
+    open-in-view: false
     properties:
       hibernate:
-        # Removed explicit dialect (let Hibernate auto-detect)
         format_sql: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:     # Gmail app password yazın
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+        transport:
+          protocol: smtp
+
   # Redis Configuration
-#  data:
-#    redis:
-#      host: localhost  # Change to 'redis' if using Docker Compose
-#      port: 6379
-#      timeout: 2000ms
-#      lettuce:
-#        pool:
-#          max-active: 8
-#          max-idle: 8
-#          min-idle: 0
+  #  data:
+  #    redis:
+  #      host: localhost
+  #      port: 6379
+  #      timeout: 2000ms
+  #      lettuce:
+  #        pool:
+  #          max-active: 8
+  #          max-idle: 8
+  #          min-idle: 0
 
   # Actuator Configuration
   main:
@@ -49,6 +66,15 @@ jwt:
     expiration: 900000 # 15 minutes
   refresh-token:
     expiration: 604800000 # 7 days
+
+email:
+  template:
+    welcome:
+      subject: "Welcome - Your registration has been completed successfully"
+    profile-update:
+      subject: "Your profile information has been updated"
+    admin-promotion:
+      subject: "Admin privileges granted"
 
 # Logging Configuration
 logging:
